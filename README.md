@@ -1,2 +1,2 @@
-# TerminalNote by CreyTuning
+# TerminalNote
 The note taking application for the terminal
