@@ -26,16 +26,28 @@
         {
             "name": "Linux",
             "includePath": [
-                "/usr/include",
+                "/usr/include/c++/5",
+                "/usr/include/i386-linux-gnu/c++/5",
+                "/usr/include/c++/5/backward",
+                "/usr/lib/gcc/i686-linux-gnu/5/include",
                 "/usr/local/include",
+                "/usr/lib/gcc/i686-linux-gnu/5/include-fixed",
+                "/usr/include/i386-linux-gnu",
+                "/usr/include",
                 "${workspaceRoot}"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",
             "browse": {
                 "path": [
-                    "/usr/include",
+                    "/usr/include/c++/5",
+                    "/usr/include/i386-linux-gnu/c++/5",
+                    "/usr/include/c++/5/backward",
+                    "/usr/lib/gcc/i686-linux-gnu/5/include",
                     "/usr/local/include",
+                    "/usr/lib/gcc/i686-linux-gnu/5/include-fixed",
+                    "/usr/include/i386-linux-gnu",
+                    "/usr/include",
                     "${workspaceRoot}"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
@@ -45,9 +57,8 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceRoot}",
-                "C:/MinGW/include",
-                "C:/MinGW/lib/gcc/mingw32/6.3.0/include"
+                "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include",
+                "${workspaceRoot}"
             ],
             "defines": [
                 "_DEBUG",
@@ -56,9 +67,8 @@
             "intelliSenseMode": "msvc-x64",
             "browse": {
                 "path": [
-                    "${workspaceRoot}",
-                    "C:/MinGW/include",
-                    "C:/MinGW/lib/gcc/mingw32/6.3.0/include"
+                    "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include/*",
+                    "${workspaceRoot}"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""

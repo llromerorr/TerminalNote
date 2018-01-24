@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-void Console_Input_Int(int* var){
+void console_input_int(int* var){
 	char 	input[12];
 	char*	point;
 
@@ -17,11 +17,11 @@ void Console_Input_Int(int* var){
 	*var = atoi(input);
 }
 
-void Console_Clear(){
+void console_clear(){
     system("cls");
 }
 
-void Console_Pause(){
+void console_pause(){
 	printf("\t");
 	while(getchar()!= '\n');
 }
