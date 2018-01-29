@@ -12,17 +12,17 @@ typedef struct{
 } Date;
 
 char* date_toString(Date * date){
-	char* DateString = (char*) malloc(sizeof(char) * 15);
-	char Bridge[8];
+	char* dateString = (char*) malloc(sizeof(char) * 15);
+	char bridge[8];
 
-	sprintf(Bridge, "%.2d/", (*date).day);
-	strcpy(DateString, Bridge);
-	sprintf(Bridge, "%.2d/", (*date).month);
-	strcat(DateString, Bridge);
-	sprintf(Bridge, "%.4d", (*date).year);
-	strcat(DateString, Bridge);
+	sprintf(bridge, "%.2d/", (*date).day);
+	strcpy(dateString, bridge);
+	sprintf(bridge, "%.2d/", (*date).month);
+	strcat(dateString, bridge);
+	sprintf(bridge, "%.4d", (*date).year);
+	strcat(dateString, bridge);
 
-	return DateString;
+	return dateString;
 }
 
 void date_show(Date * date){
@@ -66,21 +66,21 @@ int date_check(Date * date){
 	return 1;
 }
 
-int date_compare(Date * Date1, Date * Date2)
+int date_compare(Date * date1, Date * date2)
 {
-	if((*Date1).year == (*Date2).year)
+	if((*date1).year == (*date2).year)
 	{
-		if((*Date1).month == (*Date2).month)
+		if((*date1).month == (*date2).month)
 		{
-			if((*Date1).day == (*Date2).day)      return  0;
-			else if((*Date1).day > (*Date2).day)  return  1;
-			else if((*Date1).day < (*Date2).day)  return -1;
+			if((*date1).day == (*date2).day)      return  0;
+			else if((*date1).day > (*date2).day)  return  1;
+			else if((*date1).day < (*date2).day)  return -1;
 		}
-		else if((*Date1).month > (*Date2).month)  return  1;
-		else if((*Date1).month < (*Date2).month)  return -1;
+		else if((*date1).month > (*date2).month)  return  1;
+		else if((*date1).month < (*date2).month)  return -1;
 	}
-	else if((*Date1).year > (*Date2).year)        return  1;
-	else if((*Date1).year < (*Date2).year)        return -1;
+	else if((*date1).year > (*date2).year)        return  1;
+	else if((*date1).year < (*date2).year)        return -1;
 	return 0;
 }
 

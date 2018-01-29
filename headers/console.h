@@ -22,7 +22,6 @@ void console_clear(){
 }
 
 void console_pause(){
-	printf("\t");
 	while(getchar()!= '\n');
 }
 

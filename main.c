@@ -1,19 +1,29 @@
 #include "headers/note.h"
 #include "headers/console.h"
+#include "headers/database.h"
 
 int main(void){
-    //inicializando variables
-    Note * note = note_null();
-    Time * ntime = time_null();
-    Date * date = date_null();
+	//creating database
+	DB * database = db_new("ndata.dat", sizeof(int));
+	
+	//adding elements
+	for(int i = 1; i < 10; i++)
+		db_add(&i, database);
+	
+	int otherNumber = 45;
+	db_add(&otherNumber, database);
 
-    //definicion de datos
-    ntime = time_new(12,25,20);
-    date = date_new(13,7,2018);
-    note = note_new(27, "my new note", "info of my note", ntime, date);
+	//linking other database
+	DB * new = db_open(database->name);
+	int morenumber = 12;
+	db_add(&morenumber, new);
 
-    //mostrar nota
-    note_show(note);
+	//show database
+	db_show(new);
 
-    return EXIT_SUCCESS;
+	return 0;
 }
+
+// OUTPUT
+// Database: ndata.dat
+// 1   2   3   4   5   6   7   8   9   45  12
