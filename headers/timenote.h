@@ -4,12 +4,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 typedef struct{
 	int hour;
 	int minute;
 	int second;
 }Time;
+
+//--------------------------Optional--------------------------//
+char * time_GetLocalTime(){
+	time_t _time = time(0);
+    struct tm *tlocal = localtime(&_time);
+    char * output = malloc(sizeof(char) * 128);
+    strftime(output,128,"%d/%m/%y %H:%M:%S",tlocal);
+    return output;
+}
 
 //----------------------Fundamentals-------------------------//
 Time * time_null(){
