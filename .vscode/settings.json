@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "note.h": "c"
+        "note.h": "c",
+        "database.h": "c"
     }
 }
