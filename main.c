@@ -27,3 +27,4 @@ int main(void){
 // OUTPUT
 // Database: ndata.dat
 // 1   2   3   4   5   6   7   8   9   45  12
+//commit form visual studio code
