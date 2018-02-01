@@ -41,7 +41,7 @@ void note_show(Note * note){
 	printf("id: %d\n", note->id);
 	printf("title: %s\n", note->title);
 	printf("info: %s\n", note->info);
-	time_show(note->time);
+	printf("time: %s\n", time_toString(note->time));
 	printf(" ");
 	date_show(note->date);
 	putchar('\n');

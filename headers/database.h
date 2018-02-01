@@ -59,13 +59,14 @@ int db_add(void * obj, DB * database){
 }
 
 int db_show(DB * database){
-    int n = 0;
+    Note * note = malloc(sizeof(Note));
     database->file = fopen(database->name, "rb");
     fseek(database->file, sizeof(DB), SEEK_SET);
     printf("Database: %s\n", database->name);
+    printf("\n%-6s %-25s %-40s %-13s %-10s\n","ID", "TITLE", "INFO", "DATE", "TIME");
     for(int i = 0; i < database->count; i++){
-        fread(&n, database->size, 1, database->file);
-        printf("%-4d", n);
+        fread(note, database->size, 1, database->file);
+        printf("%-6d %-25s %-40s %-13s %-10s\n", note->id, note->title, note->info, date_toString(note->date), time_toString(note->time));
     }
     putchar('\n');
     fclose(database->file);

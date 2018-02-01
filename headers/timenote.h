@@ -38,8 +38,10 @@ Time * time_new(int hour, int minute, int second){
 	return _time;
 }
 
-void time_show(Time * _time){
-	printf("%d:%d:%d", _time->hour, _time->minute, _time->second);
+char * time_toString(Time * _time){
+	char * output = malloc(sizeof(char) * 100);
+	sprintf(output, "%.2d:%.2d:%.2d", _time->hour, _time->minute, _time->second);
+	return output;
 }
 //-------------------Setters and Getters---------------------//
 
