@@ -11,7 +11,7 @@ typedef struct{
 	int year;
 } Date;
 
-char* date_toString(Date * date){
+char* date_string(Date * date){
 	char* dateString = (char*) malloc(sizeof(char) * 15);
 	char bridge[8];
 

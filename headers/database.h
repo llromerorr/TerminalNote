@@ -63,10 +63,14 @@ int db_show(DB * database){
     database->file = fopen(database->name, "rb");
     fseek(database->file, sizeof(DB), SEEK_SET);
     printf("Database: %s\n", database->name);
-    printf("\n%-6s %-25s %-40s %-13s %-10s\n","ID", "TITLE", "INFO", "DATE", "TIME");
+    printf("\n%-3s %-23s %-30s %-11s %-8s\n","ID", "TITLE", "INFO", "DATE", "TIME");
     for(int i = 0; i < database->count; i++){
         fread(note, database->size, 1, database->file);
-        printf("%-6d %-25s %-40s %-13s %-10s\n", note->id, note->title, note->info, date_toString(note->date), time_toString(note->time));
+        printf("%-3d %-23s %-30s %-11s %-8s\n", note->id,
+                console_stringCuted(note->title, 22),
+                console_stringCuted(note->info, 29),
+                date_string(note->date),
+                time_toString(note->time));
     }
     putchar('\n');
     fclose(database->file);
