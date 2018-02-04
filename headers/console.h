@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <pwd.h>
 
 void console_input_int(int* var){
 	char 	input[12];
@@ -38,4 +39,5 @@ char * console_stringCuted(char * text, int count){
 		return output;
 	}
 }
+
 #endif /* CONSOLE_H */

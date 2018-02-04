@@ -6,8 +6,8 @@
 
 typedef struct{
     FILE *  file;
-    size_t  size;
     char *  name;
+    size_t  size;
     int     count;
 }DB;
 
@@ -28,7 +28,6 @@ DB * db_open(char * name){
     DB * database = malloc(sizeof(DB));
     FILE * file = fopen(name, "rb");
     if(file == NULL){
-        printf("%s %s", "can't open file", name);
         return NULL;
     }
 
@@ -48,7 +47,7 @@ int db_add(void * obj, DB * database){
     fclose(database->file);
 
     database->count++;
-    if((database->file = fopen(database->name, "r+b")) == NULL){
+    if((database->file = fopen(database->name, "rb")) == NULL){
         printf("%s \"%s\"\n", "can't open file", database->name);
         return EXIT_FAILURE;
     }
@@ -59,6 +58,10 @@ int db_add(void * obj, DB * database){
 }
 
 int db_show(DB * database){
+    if(database->count == 0){
+        printf("%s\n\n", "this book is empty (use 'note' to add new notes).");
+        return 0;
+    }
     Note * note = malloc(sizeof(Note));
     database->file = fopen(database->name, "rb");
     fseek(database->file, sizeof(DB), SEEK_SET);
