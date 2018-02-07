@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <pwd.h>
 
 void console_input_int(int* var){
 	char 	input[12];
@@ -26,7 +25,7 @@ void console_pause(){
 }
 
 char * console_stringCuted(char * text, int count){
-	char * output = malloc(sizeof(char) * count);
+	char * output = malloc(sizeof(char) * (count + 1));
 	int len = strlen(text);
 
 	if(len <= count)
@@ -36,8 +35,10 @@ char * console_stringCuted(char * text, int count){
 			output[i] = text[i];
 		for(int i = count -2; i < count; i++)
 			output[i] = '.';
+		output[count] = '\0';
 		return output;
 	}
+	return NULL;
 }
 
 #endif /* CONSOLE_H */

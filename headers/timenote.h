@@ -23,7 +23,7 @@ char * time_GetLocalTime(){
 
 //----------------------Fundamentals-------------------------//
 Time * time_null(){
-	Time * _time = (Time*) malloc (sizeof(Time));
+	Time * _time = malloc (sizeof(Time));
 	_time -> hour = 0;
 	_time -> minute = 0;
 	_time -> second = 0;

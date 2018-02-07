@@ -1,0 +1,1 @@
+cls && gcc main.c -o debug.exe && start debug.exe

@@ -47,7 +47,7 @@ int db_add(void * obj, DB * database){
     fclose(database->file);
 
     database->count++;
-    if((database->file = fopen(database->name, "rb")) == NULL){
+    if((database->file = fopen(database->name, "r+b")) == NULL){
         printf("%s \"%s\"\n", "can't open file", database->name);
         return EXIT_FAILURE;
     }
@@ -72,8 +72,26 @@ int db_show(DB * database){
         printf("%-3d %-23s %-30s %-11s %-8s\n", note->id,
                 console_stringCuted(note->title, 22),
                 console_stringCuted(note->info, 29),
-                date_string(note->date),
-                time_toString(note->time));
+                date_string(&note->date),
+                time_toString(&note->time));
+    }
+    putchar('\n');
+    fclose(database->file);
+}
+
+int db_showint(DB * database){
+    if(database->count == 0){
+        printf("%s\n\n", "this book is empty (use 'note' to add new notes).");
+        return 0;
+    }
+    int x = 0;
+    database->file = fopen(database->name, "rb");
+    fseek(database->file, sizeof(DB), SEEK_SET);
+    printf("Database: %s\n", database->name);
+
+    for(int i = 0; i < database->count; i++){
+        fread(&x, database->size, 1, database->file);
+        printf("%-3d", x);
     }
     putchar('\n');
     fclose(database->file);
