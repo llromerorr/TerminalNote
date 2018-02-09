@@ -8,17 +8,18 @@
 #include "terminalnote.h"
 
 void app_help(){
-    printf("\n%-10s %-19s %-20s\n","COMMAND", "ARGUMNETS", "DESCRIPTION");
-    printf("%-10s %-19s %-20s\n","note", "{title} | {info}", "create new note in current book");
-    printf("%-10s %-19s %-20s\n","show", "[all | id]", "show all or specific note by id (default is all)");
-    printf("%-10s %-19s %-20s\n","find", "{text}", "search for text in the content of any note");
+    printf("\n%s%-10s %-19s %-20s%s\n", TEXT_BOLD, "COMMAND", "ARGUMNETS", "DESCRIPTION", TEXT_DEFAULT);
+    printf("%s%-10s%s %-19s %-20s\n",TEXT_COLOR_FG_LCYAN,"note", TEXT_COLOR_FG_DEFAULT, "{title} | {info}", "create new note in current book");
+    printf("%s%-10s%s %-19s %-20s\n",TEXT_COLOR_FG_LWHITE,"show", TEXT_COLOR_FG_DEFAULT, "[all | id]", "show all or specific note by id (default is all)");
+    printf("%s%-10s%s %-19s %-20s\n",TEXT_COLOR_FG_LWHITE,"find", TEXT_COLOR_FG_DEFAULT, "{text}", "search for text in the content of any note");
     
-    printf("\n%-10s %-19s %-20s\n","new", "{title}", "create a new book");
-    printf("%-10s %-19s %-20s\n","open", "[{title} | none]", "open a book, show avalible books");
-    printf("%-10s %-19s %-20s\n","delete", "[{title} | id]", "delete book or note");
+    printf("\n%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LYELLOW, "new", TEXT_COLOR_FG_DEFAULT, "{title}", "create a new book");
+    printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LYELLOW, "open", TEXT_COLOR_FG_DEFAULT, "[{title} | none]", "open a book, show avalible books");
+    printf("%s%-10s%s %-19s %-20s\n",TEXT_COLOR_FG_LRED, "delete", TEXT_COLOR_FG_DEFAULT, "[{title} | id]", "delete book or note");
     
-    printf("\n%-10s %-19s %-20s\n","exit", "", "go back to system");
-    printf("\n%s", "developed by @CreyTuning 2018 from Venezuela.\n\n");
+    printf("\n%s%-10s%s %-19s %-20s", TEXT_COLOR_FG_LWHITE, "clear", TEXT_COLOR_FG_DEFAULT, "", "clear screen");
+    printf("\n%s%-10s%s %-19s %-20s\n",TEXT_COLOR_FG_LRED, "exit", TEXT_COLOR_FG_DEFAULT, "", "go back to system");
+    printf("\n%s%s%s\n\n", TEXT_BOLD, "developed by @CreyTuning 2018 from Venezuela.", TEXT_DEFAULT);
 }
 
 void app_errorCommand(){
@@ -30,31 +31,6 @@ void app_show(){
 }
 
 void app_init(){
-    char * input = malloc(sizeof(char) * 1000);
-    
-    DB * book = db_open("myBook");
-    if(book == NULL)
-        book = db_new("myBook", sizeof(Note));
-    
-    char * user = getenv("USER");
-    if(user == NULL)
-        user = "none";
-
-    printf("TerminalNote %s [%s]\n", _APPLICATION_VERSION_, time_GetLocalTime());
-    printf("if you need help type \"help\"\n\n");
-    while(true){
-        printf("%s[%s]: ", user, book->name);
-        fgets(input, 100, stdin);
-        
-        if(strstr(input, "help") != NULL)
-            app_help();
-        else if(strcmp(input, "show\n")==0)
-            db_show(book);
-        else if(strcmp(input, "exit\n")==0)
-            exit(-1);
-        else 
-            app_errorCommand();
-    }
 }
 
 #endif /* APP_H */

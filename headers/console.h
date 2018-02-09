@@ -5,6 +5,12 @@
 #include <string.h>
 #include <stdlib.h>
 
+#ifdef __linux__
+#define _CONSOLE_CLEAR_ "clear"
+#elif _WIN32
+#define _CONSOLE_CLEAR_ "cls"
+#endif
+
 void console_input_int(int* var){
 	char 	input[12];
 	char*	point;
@@ -17,7 +23,7 @@ void console_input_int(int* var){
 }
 
 void console_clear(){
-    system("cls");
+    system(_CONSOLE_CLEAR_);
 }
 
 void console_pause(){
