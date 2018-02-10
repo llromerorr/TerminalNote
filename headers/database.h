@@ -66,7 +66,7 @@ int db_show(DB * database){
     Note * note = malloc(sizeof(Note));
     database->file = fopen(database->name, "rb");
     fseek(database->file, sizeof(DB), SEEK_SET);
-    printf("Book: %s\n", database->name);
+    printf("\n%s%s%s\n", TEXT_BOLD, database->name, TEXT_DEFAULT);
     printf("\n%s%-3s %-23s %-30s %-11s %-8s%s\n",TEXT_BOLD, "ID", "TITLE", "INFO", "DATE", "TIME", TEXT_DEFAULT);
     for(int i = 0; i < database->count; i++){
         fread(note, database->size, 1, database->file);
@@ -76,26 +76,11 @@ int db_show(DB * database){
                 date_string(&note->date),
                 time_toString(&note->time));
     }
-    putchar('\n');
     fclose(database->file);
-}
-
-int db_showint(DB * database){
-    if(database->count == 0){
-        printf("%s\n\n", "this book is empty (use 'note' to add new notes).");
-        return 0;
-    }
-    int x = 0;
-    database->file = fopen(database->name, "rb");
-    fseek(database->file, sizeof(DB), SEEK_SET);
-    printf("Database: %s\n", database->name);
-
-    for(int i = 0; i < database->count; i++){
-        fread(&x, database->size, 1, database->file);
-        printf("%-3d", x);
-    }
-    putchar('\n');
-    fclose(database->file);
+    printf("\n%s%d%s notes, total size %s%.3fMB%s\n\n",
+                                                TEXT_COLOR_FG_LYELLOW, database->count,
+                                                TEXT_COLOR_FG_DEFAULT, TEXT_COLOR_FG_LYELLOW,
+                                                database->count * 0.003515625, TEXT_COLOR_FG_DEFAULT);
 }
 
 #endif //DATABASE_H

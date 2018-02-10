@@ -15,8 +15,8 @@ typedef struct{
 Note * note_null(){
     Note * note = malloc(sizeof(Note));
     note->id = 0;
-    strcpy(note->title, "none");
-    strcpy(note->info, "empty content");
+    strcpy(note->title, "-");
+    strcpy(note->info, "-");
     note->time.hour = 0;
     note->time.minute = 0;
     note->time.second = 0;

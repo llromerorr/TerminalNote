@@ -21,6 +21,9 @@ int main(void){
     while(1){
         printf("%s%s%s[%s%s%s%s%s]: ", TEXT_COLOR_FG_LWHITE, user, TEXT_COLOR_FG_DEFAULT, TEXT_BOLD, 
                                         TEXT_COLOR_FG_LBLUE, book->name, TEXT_COLOR_FG_DEFAULT, TEXT_DEFAULT);
+        
+        strcpy(command, "");
+        strcpy(input, "");
         fgets(input, 4000, stdin);
         sscanf(input, "%9s", command);
 
@@ -34,8 +37,8 @@ int main(void){
             console_clear();
         else if(strcmp(command, "exit") == 0)
             exit(0);
-        else
+else
             app_errorCommand();
-    }
+}
     return 0;
 }
