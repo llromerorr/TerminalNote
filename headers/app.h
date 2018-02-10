@@ -30,7 +30,40 @@ void app_show(){
     printf("there are not notes here, this command will be programmed.\n\n");
 }
 
-void app_init(){
+int app_note(char * input, DB * book){
+    char * next = strchr(input, '|');
+    if(!next){
+        app_errorCommand();
+        return -1;
+    }
+    Note * note = note_null();
+    // create a random ID, but this may be unnecessary
+    // srand(time(NULL));
+    // note->id = (rand() + 1) % 98;
+    note->id = book->count + 1;
+
+    next = strchr(input, ' ');
+    if(!next){
+        app_errorCommand();
+        return -1;
+    }
+
+    next++;
+    sscanf(next, "%500[^|]", note->title);
+    note->title[strlen(note->title) - 1] = '\0';
+
+    next = strchr(next, '|') + 1;
+    while(next[0] == ' ')
+        next++;
+    sscanf(next, "%3000[^\n]", note->info);
+    note->info[strlen(note->info)] = '\0';
+
+    time_copy(&note->time, time_local());
+    date_copy(&note->date, date_local());
+
+    db_add(note, book);
+    printf("%s%s+1%s note have been added.%s\n\n", TEXT_BOLD, TEXT_COLOR_FG_GREEN, TEXT_COLOR_FG_DEFAULT,TEXT_DEFAULT);
+    return 0;
 }
 
 #endif /* APP_H */

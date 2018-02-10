@@ -5,6 +5,7 @@
 #include "headers/terminalnote.h"
 
 int main(void){
+    char command[10];
     char * input = malloc(sizeof(char) * 1000);
     
     DB * book = db_open("myBook");
@@ -17,20 +18,23 @@ int main(void){
 
     printf("%sTerminalNote%s %s [%s]\n",TEXT_BOLD, TEXT_DEFAULT,_APPLICATION_VERSION_, time_GetLocalTime());
     printf("if you need help type \"%shelp\"%s\n\n", TEXT_COLOR_FG_LMAGENTA, TEXT_DEFAULT);
-    while(true){
-        printf("%s%s%s[%s%s%s%s%s]: ", TEXT_COLOR_FG_LWHITE, user, TEXT_COLOR_FG_DEFAULT,
-                TEXT_BOLD, TEXT_COLOR_FG_LGREEN, book->name, TEXT_COLOR_FG_DEFAULT, TEXT_DEFAULT);
+    while(1){
+        printf("%s%s%s[%s%s%s%s%s]: ", TEXT_COLOR_FG_LWHITE, user, TEXT_COLOR_FG_DEFAULT, TEXT_BOLD, 
+                                        TEXT_COLOR_FG_LBLUE, book->name, TEXT_COLOR_FG_DEFAULT, TEXT_DEFAULT);
+        fgets(input, 4000, stdin);
+        sscanf(input, "%9s", command);
 
-        fgets(input, 100, stdin);
-        if(strstr(input, "help") != NULL)
-            app_help();
-        else if(strcmp(input, "show\n")==0)
+        if(strcmp(command, "note") == 0)
+            app_note(input, book);
+        else if(strcmp(command, "show") == 0)
             db_show(book);
-        else if(strcmp(input, "clear\n")==0)
+        else if(strcmp(command, "help") == 0)
+            app_help();
+        else if(strcmp(command, "clear") == 0)
             console_clear();
-        else if(strcmp(input, "exit\n")==0)
-            exit(-1);
-        else 
+        else if(strcmp(command, "exit") == 0)
+            exit(0);
+        else
             app_errorCommand();
     }
     return 0;

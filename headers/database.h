@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "textformat.h"
 
 typedef struct{
     FILE *  file;
@@ -59,14 +60,14 @@ int db_add(void * obj, DB * database){
 
 int db_show(DB * database){
     if(database->count == 0){
-        printf("%s\n\n", "this book is empty (use 'note' to add new notes).");
+        printf("this book is empty (use '%snote%s' to add new notes).\n\n", TEXT_COLOR_FG_LMAGENTA, TEXT_DEFAULT);
         return 0;
     }
     Note * note = malloc(sizeof(Note));
     database->file = fopen(database->name, "rb");
     fseek(database->file, sizeof(DB), SEEK_SET);
-    printf("Database: %s\n", database->name);
-    printf("\n%-3s %-23s %-30s %-11s %-8s\n","ID", "TITLE", "INFO", "DATE", "TIME");
+    printf("Book: %s\n", database->name);
+    printf("\n%s%-3s %-23s %-30s %-11s %-8s%s\n",TEXT_BOLD, "ID", "TITLE", "INFO", "DATE", "TIME", TEXT_DEFAULT);
     for(int i = 0; i < database->count; i++){
         fread(note, database->size, 1, database->file);
         printf("%-3d %-23s %-30s %-11s %-8s\n", note->id,

@@ -45,6 +45,16 @@ void date_show(Date * date){
 	printf("%.4d", date->year);
 }
 
+Date * date_local(){
+	Date * date = malloc(sizeof(Date));
+	time_t __time = time(0);
+    struct tm *tlocal = localtime(&__time);
+	date->day = tlocal->tm_mday;
+	date->month = tlocal->tm_mon + 1;
+	date->year = tlocal->tm_year + 1900;
+	return date;
+}
+
 int date_toDays(Date * date){
 	return ((*date).year * 365) + (((*date).month) * 30) + (*date).day;
 }

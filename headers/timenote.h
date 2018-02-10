@@ -21,6 +21,15 @@ char * time_GetLocalTime(){
     return output;
 }
 
+Time * time_local(){
+	Time * _time = malloc(sizeof(Time));
+	time_t __time = time(0);
+    struct tm *tlocal = localtime(&__time);
+	_time->hour = tlocal->tm_hour;
+	_time->minute = tlocal->tm_min;
+	_time->second = tlocal->tm_sec;
+	return _time;
+}
 //----------------------Fundamentals-------------------------//
 Time * time_null(){
 	Time * _time = malloc (sizeof(Time));
@@ -36,6 +45,13 @@ Time * time_new(int hour, int minute, int second){
 	_time -> minute = minute;
 	_time -> second = second;
 	return _time;
+}
+
+int time_copy(Time * to, Time * from){
+	to->hour = from->hour;
+	to->minute = from->minute;
+	to->second = from->second;
+	return 0;
 }
 
 char * time_toString(Time * _time){
