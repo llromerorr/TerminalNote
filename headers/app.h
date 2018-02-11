@@ -43,6 +43,16 @@ int app_note(char * input, DB * book){
         app_noteError();
         return -1;
     }
+
+    if(book->count >= 999){
+        printf("\n%s%s is full, please delete notes or create a new book.%s\n", 
+                            TEXT_COLOR_FG_LRED, book->name,TEXT_COLOR_FG_DEFAULT);
+        printf("%s%d%s notes, total size %s%.3fMB%s\n\n",
+                                            TEXT_COLOR_FG_LYELLOW, book->count,
+                                            TEXT_COLOR_FG_DEFAULT, TEXT_COLOR_FG_LYELLOW,
+                                            book->count * 0.003515625, TEXT_COLOR_FG_DEFAULT);
+        return 0;
+    }
     Note * note = note_null();
     note->id = book->count + 1;
 
@@ -102,10 +112,11 @@ int app_note(char * input, DB * book){
     date_copy(&note->date, date_local());
 
     db_add(note, book);
-    printf("\n%s%s+1%s note have been added.%s\n", TEXT_BOLD, TEXT_COLOR_FG_GREEN, TEXT_COLOR_FG_DEFAULT,
-                                                   TEXT_DEFAULT);
-    printf("    %s -> %s %ssuccessful%s\n",console_stringCuted(note->title, 10), book->name, TEXT_COLOR_FG_LGREEN,
-                                        TEXT_DEFAULT);
+    printf("\n%s%s+1%s note have been added.%s\n", TEXT_BOLD, TEXT_COLOR_FG_GREEN,
+                                                   TEXT_COLOR_FG_DEFAULT, TEXT_DEFAULT);
+    printf("    %s -> %s %ssuccessful%s\n", console_stringCuted(note->title, 10), 
+                                            book->name, TEXT_COLOR_FG_LGREEN,
+                                            TEXT_DEFAULT);
     printf("    %s%d%s notes, total size %s%.3fMB%s\n\n",
                                                 TEXT_COLOR_FG_LYELLOW, book->count,
                                                 TEXT_COLOR_FG_DEFAULT, TEXT_COLOR_FG_LYELLOW,
