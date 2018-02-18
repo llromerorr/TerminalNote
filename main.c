@@ -37,8 +37,8 @@ int main(void){
             console_clear();
         else if(strcmp(command, "exit") == 0)
             exit(0);
-else
+        else
             app_errorCommand();
-}
+    }
     return 0;
 }

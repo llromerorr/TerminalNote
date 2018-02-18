@@ -4,6 +4,17 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
+
+#ifdef __linux__
+	void console_clear(){
+		printf("%s", "\033[2J\033[;H");
+	}
+#elif _WIN32
+	void console_clear(){
+		system("cls");
+	}
+#endif
 
 void console_input_int(int* var){
 	char 	input[12];
@@ -14,10 +25,6 @@ void console_input_int(int* var){
 
 	if(point == NULL) while(getchar()!= '\n');
 	*var = atoi(input);
-}
-
-void console_clear(){
-	printf("%s", "\033[2J\033[;H");
 }
 
 void console_pause(){
@@ -39,6 +46,46 @@ char * console_stringCuted(char * text, int count){
 		return output;
 	}
 	return NULL;
+}
+
+char * console_clearString(char * input){
+	int inputPosition = 0;
+	int outputCount = 1;
+	char * output = malloc(sizeof(char));
+
+	//Find first char in the string
+	for(int i = 0;; i++){
+		if(input[i] == '\0' || input[i] == '\n')
+			return "";
+
+		else if(input[i] != ' '){
+			inputPosition = i;
+			break;
+		}
+	}
+
+	//Clear spaces between words
+	for(int i = inputPosition; i < strlen(input); i++){
+		if(input[i] == ' '){
+			outputCount++;
+			output = realloc(output, sizeof(char) * outputCount);
+			output[outputCount - 2] = input[i];
+			for(; input[i] == ' '; i++);
+			i--;
+		}
+		else if(input[i] != '\0' && input[i] != '\n'){
+			outputCount++;
+			output = realloc(output, sizeof(char) * outputCount);
+			output[outputCount - 2] = input[i];
+		}
+	}
+
+	//add \0 character to end string
+	if(output[outputCount - 2] == ' ')
+		output[outputCount - 2] = '\0';
+	else 
+		output[outputCount - 1] = '\0';
+	return output;
 }
 
 #endif /* CONSOLE_H */
