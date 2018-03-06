@@ -11,7 +11,7 @@
 void app_help()
 {
     printf("\n%s%-10s %-19s %-20s%s\n", TEXT_BOLD, "COMMAND", "ARGUMNETS", "DESCRIPTION", TEXT_DEFAULT);
-    printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LCYAN, "note", TEXT_COLOR_FG_DEFAULT, "{title} | {info}", "create new note in current book");
+    printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LCYAN, "note", TEXT_COLOR_FG_DEFAULT, "{title} : {info}", "create new note in current book");
     printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LWHITE, "show", TEXT_COLOR_FG_DEFAULT, "[all | id]", "show all or specific note by id (default is all)");
     printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LWHITE, "find", TEXT_COLOR_FG_DEFAULT, "{text}", "search for text in the content of any note");
 
@@ -69,174 +69,45 @@ DB *app_getDeafaultBook()
     return book;
 }
 
-int app_note(char *input, DB *book)
+int app_note(char **args, int count)
 {
-    char *next = strchr(input, '|');
-    if (!next)
-    {
-        app_noteError();
-        return -1;
-    }
+    //creatin resources
+    DB *book = app_getDeafaultBook();
+    Note *note = note_null();
+    sds title = sdsnew("");
+    sds info = sdsnew("");
 
+    //Chek overload Book
     if (book->count >= 999)
     {
         printf("\n%s%s is full, please delete notes or create a new book.%s\n", TEXT_COLOR_FG_LRED, book->name, TEXT_COLOR_FG_DEFAULT);
         printf("%s%d%s notes, total size %s%.3fMB%s\n\n", TEXT_COLOR_FG_LYELLOW, book->count, TEXT_COLOR_FG_DEFAULT, TEXT_COLOR_FG_LYELLOW, book->count * 0.003515625, TEXT_COLOR_FG_DEFAULT);
         return 0;
     }
-    Note *note = note_null();
+
+    //convert args to title and info
+    for (int i = 0; i < count; i++)
+    {
+        if (strcmp(args[i], ":") == 0)
+        {
+            for (int j = i + 1; j < count; j++)
+            {
+                if (j > i + 1)
+                    info = sdscat(info, " ");
+                info = sdscat(info, args[j]);
+            }
+            break;
+        }
+
+        if (i > 0)
+            title = sdscat(title, " ");
+        title = sdscat(title, args[i]);
+    }
+
+    //add info note
+    strcpy(note->title, title);
+    strcpy(note->info, info);
     note->id = book->count + 1;
-
-    //search first chart to title
-    for (int i = 0;; i++)
-        if (input[i] != ' ')
-        {
-            next = &input[i];
-            break;
-        }
-
-    next = strchr(next, ' ');
-    if (!next)
-    {
-        app_noteError();
-        return -1;
-    }
-
-    //delete spaces before title
-    for (int i = 0;; i++)
-    {
-        if (next[i] == '\0')
-        {
-            app_noteError();
-            return -1;
-        }
-
-        else if (next[i] == '|')
-            break;
-
-        else if (next[i] != ' ')
-        {
-            next = &next[i];
-            sscanf(next, "%500[^|]", note->title);
-            break;
-        }
-    }
-
-    //delete ending spaces to title
-    for (int i = strlen(note->title) - 1;; i--)
-    {
-        if (note->title[i] != ' ')
-        {
-            note->title[i + 1] = '\0';
-            break;
-        }
-    }
-
-    //search first character of info
-    next = strchr(next, '|') + 1;
-    while (next[0] == ' ')
-        next++;
-    sscanf(next, "%3000[^\n]", note->info);
-
-    //delete ending spaces to title
-    for (int i = strlen(note->info) - 1;; i--)
-    {
-        if (note->info[i] != ' ')
-        {
-            note->info[i + 1] = '\0';
-            break;
-        }
-    }
-
-    time_copy(&note->time, time_local());
-    date_copy(&note->date, date_local());
-
-    db_add(note, book);
-    printf("\n%s%s+1%s note have been added.%s\n", TEXT_BOLD, TEXT_COLOR_FG_GREEN, TEXT_COLOR_FG_DEFAULT, TEXT_DEFAULT);
-    printf("    %s -> %s %ssuccessful%s\n", console_stringCuted(note->title, 10), book->name, TEXT_COLOR_FG_LGREEN, TEXT_DEFAULT);
-    printf("    %s%d%s notes, total size %s%.3fMB%s\n\n", TEXT_COLOR_FG_LYELLOW, book->count, TEXT_COLOR_FG_DEFAULT, TEXT_COLOR_FG_LYELLOW, book->count * 0.003515625, TEXT_COLOR_FG_DEFAULT);
-    return 0;
-}
-
-int _app_note(char *input, DB *book)
-{
-    char *next = strchr(input, '|');
-    if (!next)
-    {
-        app_noteError();
-        return -1;
-    }
-
-    if (book->count >= 999)
-    {
-        printf("\n%s%s is full, please delete notes or create a new book.%s\n", TEXT_COLOR_FG_LRED, book->name, TEXT_COLOR_FG_DEFAULT);
-        printf("%s%d%s notes, total size %s%.3fMB%s\n\n", TEXT_COLOR_FG_LYELLOW, book->count, TEXT_COLOR_FG_DEFAULT, TEXT_COLOR_FG_LYELLOW, book->count * 0.003515625, TEXT_COLOR_FG_DEFAULT);
-        return 0;
-    }
-    Note *note = note_null();
-    note->id = book->count + 1;
-
-    //search first chart to title
-    for (int i = 0;; i++)
-        if (input[i] != ' ')
-        {
-            next = &input[i];
-            break;
-        }
-
-    next = strchr(next, ' ');
-    if (!next)
-    {
-        app_noteError();
-        return -1;
-    }
-
-    //delete spaces before title
-    for (int i = 0;; i++)
-    {
-        if (next[i] == '\0')
-        {
-            app_noteError();
-            return -1;
-        }
-
-        else if (next[i] == '|')
-            break;
-
-        else if (next[i] != ' ')
-        {
-            next = &next[i];
-            sscanf(next, "%500[^|]", note->title);
-            break;
-        }
-    }
-
-    //delete ending spaces to title
-    for (int i = strlen(note->title) - 1;; i--)
-    {
-        if (note->title[i] != ' ')
-        {
-            note->title[i + 1] = '\0';
-            break;
-        }
-    }
-
-    //search first character of info
-    next = strchr(next, '|') + 1;
-    while (next[0] == ' ')
-        next++;
-    sscanf(next, "%3000[^\n]", note->info);
-
-    //delete ending spaces to title
-    for (int i = strlen(note->info) - 1;; i--)
-    {
-        if (note->info[i] != ' ')
-        {
-            note->info[i + 1] = '\0';
-            break;
-        }
-    }
-
     time_copy(&note->time, time_local());
     date_copy(&note->date, date_local());
 
@@ -250,7 +121,10 @@ int _app_note(char *input, DB *book)
 int app_scanInput(char **arguments, int count)
 {
     if (strcmp(arguments[0], "note") == 0)
-        puts("note command executed...\n");
+        if (count > 1)
+            app_note(arguments + 1, count - 1);
+        else
+            app_noteError();
 
     else if (strcmp(arguments[0], "exit") == 0)
         exit(-1);
@@ -275,7 +149,7 @@ int app_interactiveSession()
     //Show header application
     printf("%sTerminalNote%s %s [%s]\n", TEXT_BOLD, TEXT_DEFAULT, _APPLICATION_VERSION_, time_GetLocalTime());
     printf("if you need help type \"%shelp\"%s\n\n", TEXT_COLOR_FG_LMAGENTA, TEXT_DEFAULT);
-    
+
     //Creating resources
     char *input = malloc(sizeof(char) * 1000);
     char **arguments = NULL;
