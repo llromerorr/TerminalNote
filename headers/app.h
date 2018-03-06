@@ -21,7 +21,7 @@ void app_help()
 
     printf("\n%s%-10s%s %-19s %-20s", TEXT_COLOR_FG_LWHITE, "clear", TEXT_COLOR_FG_DEFAULT, "", "clear screen");
     printf("\n%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LRED, "exit", TEXT_COLOR_FG_DEFAULT, "", "go back to system");
-    printf("\n%s%s%s\n\n", TEXT_BOLD, "developed by @CreyTuning 2018 from Venezuela.", TEXT_DEFAULT);
+    printf("\n%s%s%s\n\n", TEXT_BOLD, "developed by @CreyTuning from Venezuela.", TEXT_DEFAULT);
 }
 
 void app_errorCommand()
@@ -250,14 +250,22 @@ int _app_note(char *input, DB *book)
 int app_scanInput(char **arguments, int count)
 {
     if (strcmp(arguments[0], "note") == 0)
-    {
         puts("note command executed...\n");
-    }
 
     else if (strcmp(arguments[0], "exit") == 0)
-    {
         exit(-1);
-    }
+
+    else if (strcmp(arguments[0], "help") == 0)
+        app_help();
+
+    else if (strcmp(arguments[0], "clear") == 0)
+        console_clear();
+
+    else if (strcmp(arguments[0], "show") == 0)
+        db_show(app_getDeafaultBook());
+
+    else
+        app_errorCommand();
 
     return 0;
 }
@@ -288,4 +296,5 @@ int app_interactiveSession()
         arguments = sdssplitargs(input, &argumentsCount);
     } while (!app_scanInput(arguments, argumentsCount));
 }
+
 #endif /* APP_H */
