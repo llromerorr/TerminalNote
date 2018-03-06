@@ -7,7 +7,7 @@
 
 typedef struct{
     FILE *  file;
-    char *  name;
+    char    name[1000];
     size_t  size;
     int     count;
 }DB;
@@ -18,7 +18,7 @@ DB * db_new(char * name, size_t size){
         return NULL;
     
     database->size = size;
-    database->name = name;
+    strcpy(database->name, name);
     database->count = 0;
     fwrite(database, sizeof(DB), 1, database->file);
     fclose(database->file);

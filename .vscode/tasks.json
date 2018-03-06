@@ -4,10 +4,13 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "run",
             "type": "shell",
-            "command": "cls && gcc main.c -o debug && start debug.exe",
-            "problemMatcher": []
+            "command": "clear && gcc main.c sds.c -o debug && gnome-terminal -e \"./debug\"",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }
