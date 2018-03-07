@@ -12,21 +12,23 @@ void app_help()
 {
     printf("\n%s%-10s %-19s %-20s%s\n", TEXT_BOLD, "COMMAND", "ARGUMNETS", "DESCRIPTION", TEXT_DEFAULT);
     printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LCYAN, "note", TEXT_COLOR_FG_DEFAULT, "{title} : {info}", "create new note in current book");
-    printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LWHITE, "show", TEXT_COLOR_FG_DEFAULT, "[all | id]", "show all or specific note by id (default is all)");
+    printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LWHITE, "show", TEXT_COLOR_FG_DEFAULT, "{book | note id}", "show all or specific note by id (default is all)");
     printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LWHITE, "find", TEXT_COLOR_FG_DEFAULT, "{text}", "search for text in the content of any note");
 
-    printf("\n%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LYELLOW, "new", TEXT_COLOR_FG_DEFAULT, "{title}", "create a new book");
-    printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LYELLOW, "open", TEXT_COLOR_FG_DEFAULT, "[{title} | none]", "open a book, show avalible books");
-    printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LRED, "delete", TEXT_COLOR_FG_DEFAULT, "[{title} | id]", "delete book or note");
-
+    printf("\n%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LYELLOW, "new", TEXT_COLOR_FG_DEFAULT, "{name}", "create a new book");
+    printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LYELLOW, "open", TEXT_COLOR_FG_DEFAULT, "{book | note id}", "open a book, show avalible books");
+    printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LRED, "delete", TEXT_COLOR_FG_DEFAULT, "{book | note id}", "delete book or note");
+    
     printf("\n%s%-10s%s %-19s %-20s", TEXT_COLOR_FG_LWHITE, "clear", TEXT_COLOR_FG_DEFAULT, "", "clear screen");
+    printf("\n%s%-10s%s %-19s %-20s", TEXT_COLOR_FG_LWHITE, "help", TEXT_COLOR_FG_DEFAULT, "", "display the help");
     printf("\n%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LRED, "exit", TEXT_COLOR_FG_DEFAULT, "", "go back to system");
     printf("\n%s%s%s\n\n", TEXT_BOLD, "developed by @CreyTuning from Venezuela.", TEXT_DEFAULT);
 }
 
 void app_errorCommand()
 {
-    printf("can not recognize this command.\n\n");
+    printf("can not recognize this command.\n");
+    printf("if you need help type \"%shelp%s\"\n\n", TEXT_COLOR_FG_LMAGENTA, TEXT_DEFAULT);
 }
 
 void app_noteError()
@@ -118,6 +120,32 @@ int app_note(char **args, int count)
     return 0;
 }
 
+int app_newBook(char **args, int count){
+    DB * book = NULL;
+    if(count > 1)
+        printf("Creating %d books\n", count);
+
+    for(int i = 0; i < count; i++)
+    {
+        book = db_new(args[i], sizeof(Note));
+        printf("(100%%) creating... (100%%) preparing '%s'... [%sSuccessfully%s]\n", args[i], TEXT_COLOR_FG_LGREEN, TEXT_DEFAULT);
+    }
+
+    putchar('\n');
+}
+
+int app_openBook(char **args, int count)
+{
+    FILE * init_book = fopen("init_book.dat", "w");
+    if(!init_book)
+        printf("can not open init_book.dat file\n\n");
+
+    fprintf(init_book, "%s\n", args[0]);
+    fclose(init_book);
+    printf("%s is open\n\n", args[0]);
+    return 0;
+}
+
 int app_scanInput(char **arguments, int count)
 {
     if (strcmp(arguments[0], "note") == 0)
@@ -131,6 +159,12 @@ int app_scanInput(char **arguments, int count)
 
     else if (strcmp(arguments[0], "help") == 0)
         app_help();
+    
+    else if (strcmp(arguments[0], "new") == 0)
+        app_newBook(arguments + 1, count - 1);
+
+    else if (strcmp(arguments[0], "open") == 0)
+        app_openBook(arguments + 1, count - 1);
 
     else if (strcmp(arguments[0], "clear") == 0)
         console_clear();
@@ -148,7 +182,7 @@ int app_interactiveSession()
 {
     //Show header application
     printf("%sTerminalNote%s %s [%s]\n", TEXT_BOLD, TEXT_DEFAULT, _APPLICATION_VERSION_, time_GetLocalTime());
-    printf("if you need help type \"%shelp\"%s\n\n", TEXT_COLOR_FG_LMAGENTA, TEXT_DEFAULT);
+    printf("if you need help type \"%shelp%s\"\n\n", TEXT_COLOR_FG_LMAGENTA, TEXT_DEFAULT);
 
     //Creating resources
     char *input = malloc(sizeof(char) * 1000);
@@ -164,6 +198,7 @@ int app_interactiveSession()
     //Start interactive session
     do
     {
+        book = app_getDeafaultBook();
         printf("%s%s%s[%s%s%s%s%s]: ", TEXT_COLOR_FG_LWHITE, user, TEXT_COLOR_FG_DEFAULT, TEXT_BOLD, TEXT_COLOR_FG_LBLUE, book->name, TEXT_COLOR_FG_DEFAULT, TEXT_DEFAULT);
         fgets(input, 1000, stdin);
         //converting input string to array of string (arguments)
