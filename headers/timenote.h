@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <stdlib.h>
 
 typedef struct{
 	int hour;
@@ -16,13 +17,13 @@ typedef struct{
 char * time_GetLocalTime(){
 	time_t _time = time(0);
     struct tm *tlocal = localtime(&_time);
-    char * output = malloc(sizeof(char) * 128);
+    char * output = (char*) malloc(sizeof(char) * 128);
     strftime(output,128,"%d/%m/%y %H:%M:%S",tlocal);
     return output;
 }
 
 Time * time_local(){
-	Time * _time = malloc(sizeof(Time));
+	Time * _time = (Time*) malloc(sizeof(Time));
 	time_t __time = time(0);
     struct tm *tlocal = localtime(&__time);
 	_time->hour = tlocal->tm_hour;
@@ -32,7 +33,7 @@ Time * time_local(){
 }
 //----------------------Fundamentals-------------------------//
 Time * time_null(){
-	Time * _time = malloc (sizeof(Time));
+	Time * _time = (Time*) malloc (sizeof(Time));
 	_time -> hour = 0;
 	_time -> minute = 0;
 	_time -> second = 0;
@@ -55,7 +56,7 @@ int time_copy(Time * to, Time * from){
 }
 
 char * time_toString(Time * _time){
-	char * output = malloc(sizeof(char) * 100);
+	char * output = (char*) malloc(sizeof(char) * 100);
 	sprintf(output, "%.2d:%.2d:%.2d", _time->hour, _time->minute, _time->second);
 	return output;
 }

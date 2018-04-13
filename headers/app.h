@@ -1,6 +1,44 @@
 #ifndef APP_H
 #define APP_H
 
+#ifdef _WIN32
+    #include <windows.h>
+    char * app_getPath()
+    {
+        char * path = (char*) malloc(sizeof(char) * 1024);
+        char * lastslash = NULL;
+
+        GetModuleFileName(0, path, PATH_MAX);
+
+        if(!(lastslash = strrchr(path, '\\')))
+            if(!(lastslash = strrchr(path, '/')))
+                return NULL;
+
+        lastslash[1] = '\0';
+
+        return path;
+    }
+#else
+    #include <unistd.h>
+
+    char * app_getPath()
+    {
+        static char path[1024];
+        char * lastslash = NULL;
+
+        if (readlink("/proc/self/exe", path, sizeof(path) - 1) == -1)
+            puts("ERROR PATH");
+
+        if(!(lastslash = strrchr(path, '\\')))
+            if(!(lastslash = strrchr(path, '/')))
+                return NULL;
+
+        lastslash[1] = '\0';
+
+        return &path[0];
+    }
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -171,6 +209,10 @@ int app_scanInput(char **arguments, int count)
 
     else if (strcmp(arguments[0], "show") == 0)
         db_show(app_getDeafaultBook());
+
+    //Temporaly fuction to test path
+    else if (strcmp(arguments[0], "path") == 0)
+        printf("path: %s\n", app_getPath());
 
     else
         app_errorCommand();

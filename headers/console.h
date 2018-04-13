@@ -31,7 +31,7 @@ void console_pause(){
 }
 
 char * console_stringCuted(char * text, int count){
-	char * output = malloc(sizeof(char) * (count + 1));
+	char * output = (char*) malloc(sizeof(char) * (count + 1));
 	int len = strlen(text);
 
 	if(len <= count)
@@ -50,7 +50,7 @@ char * console_stringCuted(char * text, int count){
 char * console_clearString(char * input){
 	int inputPosition = 0;
 	int outputCount = 1;
-	char * output = malloc(sizeof(char));
+	char * output = (char*) malloc(sizeof(char));
 
 	//Find first char in the string
 	for(int i = 0;; i++){
@@ -67,14 +67,14 @@ char * console_clearString(char * input){
 	for(int i = inputPosition; i < strlen(input); i++){
 		if(input[i] == ' '){
 			outputCount++;
-			output = realloc(output, sizeof(char) * outputCount);
+			output = (char*) realloc(output, sizeof(char) * outputCount);
 			output[outputCount - 2] = input[i];
 			for(; input[i] == ' '; i++);
 			i--;
 		}
 		else if(input[i] != '\0' && input[i] != '\n'){
 			outputCount++;
-			output = realloc(output, sizeof(char) * outputCount);
+			output = (char*) realloc(output, sizeof(char) * outputCount);
 			output[outputCount - 2] = input[i];
 		}
 	}
