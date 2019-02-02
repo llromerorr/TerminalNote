@@ -183,6 +183,15 @@ int app_openBook(char **args, int count)
     return 0;
 }
 
+int app_show(char **args, int count)
+{
+    if(count == 0)
+        db_showAll(app_getDeafaultBook());
+    else
+        db_show(app_getDeafaultBook(), atoi(args[0]));
+    
+}
+
 int app_scanInput(char **arguments, int count)
 {
     if (strcmp(arguments[0], "note") == 0)
@@ -209,7 +218,7 @@ int app_scanInput(char **arguments, int count)
         console_clear();
 
     else if (strcmp(arguments[0], "show") == 0)
-        db_show(app_getDeafaultBook());
+        app_show(arguments + 1, count - 1);
 
     //Temporaly fuction to test path
     // else if (strcmp(arguments[0], "path") == 0)

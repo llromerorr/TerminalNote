@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #ifdef __linux__
 	void console_clear(){
@@ -150,6 +151,21 @@ char * console_stringCat(char * string1, char * string2)
 	stringTemp[lenstr1 + lenstr2] = '\0';
 
 	return stringTemp;
+}
+
+char * console_stringToUpper(char * input)
+{
+	char * temp = (char*) malloc(sizeof(char));
+
+	for(int i = 0; i < strlen(input); i++)
+	{
+		temp[i] = toupper(input[i]);
+		temp = (char*) realloc(temp, sizeof(char) * (i + 2));
+	}
+
+	temp[strlen(input)] = '\0';
+
+	return temp;
 }
 
 #endif /* CONSOLE_H */
