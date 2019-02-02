@@ -8,7 +8,7 @@
         char * path = (char*) malloc(sizeof(char) * 1024);
         char * lastslash = NULL;
 
-        GetModuleFileName(0, path, PATH_MAX);
+        GetModuleFileName(0, path, 1000);
 
         if(!(lastslash = strrchr(path, '\\')))
             if(!(lastslash = strrchr(path, '/')))
@@ -58,7 +58,7 @@ void app_help()
     printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LRED, "delete", TEXT_COLOR_FG_DEFAULT, "{book | note id}", "delete book or note");
     
     printf("\n%s%-10s%s %-19s %-20s", TEXT_COLOR_FG_LWHITE, "clear", TEXT_COLOR_FG_DEFAULT, "", "clear screen");
-    printf("\n%s%-10s%s %-19s %-20s", TEXT_COLOR_FG_LWHITE, "help", TEXT_COLOR_FG_DEFAULT, "", "display the help");
+    printf("\n%s%-10s%s %-19s %-20s", TEXT_COLOR_FG_LWHITE, "help", TEXT_COLOR_FG_DEFAULT, "", "display help");
     printf("\n%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LRED, "exit", TEXT_COLOR_FG_DEFAULT, "", "go back to system");
     printf("\n%s%s%s\n\n", TEXT_BOLD, "developed by @CreyTuning from Venezuela.", TEXT_DEFAULT);
 }
@@ -111,13 +111,13 @@ DB *app_getDeafaultBook()
 
 int app_note(char **args, int count)
 {
-    //creatin resources
+    //creating resources
     DB *book = app_getDeafaultBook();
     Note *note = note_null();
     sds title = sdsnew("");
     sds info = sdsnew("");
 
-    //Chek overload Book
+    //Check overload Book
     if (book->count >= 999)
     {
         printf("\n%s%s is full, please delete notes or create a new book.%s\n", TEXT_COLOR_FG_LRED, book->name, TEXT_COLOR_FG_DEFAULT);
@@ -199,11 +199,13 @@ int app_scanInput(char **arguments, int count)
         app_help();
     
     else if (strcmp(arguments[0], "new") == 0)
-        app_newBook(arguments + 1, count - 1);
+        app_errorCommand();
+        // app_newBook(arguments + 1, count - 1);
 
     else if (strcmp(arguments[0], "open") == 0)
-        app_openBook(arguments + 1, count - 1);
-
+        app_errorCommand();
+        // app_openBook(arguments + 1, count - 1);
+        
     else if (strcmp(arguments[0], "clear") == 0)
         console_clear();
 
@@ -211,8 +213,8 @@ int app_scanInput(char **arguments, int count)
         db_show(app_getDeafaultBook());
 
     //Temporaly fuction to test path
-    else if (strcmp(arguments[0], "path") == 0)
-        printf("path: %s\n", app_getPath());
+    // else if (strcmp(arguments[0], "path") == 0)
+    //     printf("path: %s\n", app_getPath());
 
     else
         app_errorCommand();
@@ -243,8 +245,10 @@ int app_interactiveSession()
         book = app_getDeafaultBook();
         printf("%s%s%s[%s%s%s%s%s]: ", TEXT_COLOR_FG_LWHITE, user, TEXT_COLOR_FG_DEFAULT, TEXT_BOLD, TEXT_COLOR_FG_LBLUE, book->name, TEXT_COLOR_FG_DEFAULT, TEXT_DEFAULT);
         fgets(input, 1000, stdin);
+        
         //converting input string to array of string (arguments)
-        arguments = sdssplitargs(input, &argumentsCount);
+        arguments = console_splitString(input, &argumentsCount);
+
     } while (!app_scanInput(arguments, argumentsCount));
 }
 

@@ -13,7 +13,7 @@ typedef struct{
 }Note;
 
 Note * note_null(){
-    Note * note = malloc(sizeof(Note));
+    Note * note = (Note*) malloc(sizeof(Note));
     note->id = 0;
     strcpy(note->title, "-");
     strcpy(note->info, "-");
@@ -31,7 +31,7 @@ Note * note_new(int id,
                 char * info,
                 Time * _time,
                 Date * date){
-    Note * note = malloc(sizeof(Note));
+    Note * note = (Note*) malloc(sizeof(Note));
     note->id	= id;
     strcpy(note->title, title);
     strcpy(note->info, info);

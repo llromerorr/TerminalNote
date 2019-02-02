@@ -87,4 +87,44 @@ char * console_clearString(char * input){
 	return output;
 }
 
+char ** console_splitString(char * input, int * count)
+{
+	int argc = 0;
+	char * current = NULL;
+	char ** vector = (char**) malloc(sizeof(char*));
+
+	for(int i = 0; i < strlen(input); i++)
+	{
+		//skip spaces before first argument
+		if(input[i] == ' ' && argc == 0)
+			continue;
+
+		//break loop
+		else if(input[i] == '\n' || input[i] == '\0')
+			break;
+
+		//append new argument
+		else if(input[i] != ' ')
+		{
+			int tempCount = 0;
+			current = (char*) malloc(sizeof(char));
+
+			for(int j = 0; input[i + j] != ' ' && input[i + j] != '\n'; j++, tempCount = j)
+			{
+				current[j] = input[i + j];
+				current = (char*) realloc(current, sizeof(char) * (j + 2));
+			}
+
+			current[tempCount] = '\0';
+			vector[argc] = current;
+			vector = (char**) realloc(vector, sizeof(char*) * (argc + 2));
+			argc++;
+			i += tempCount;
+		}
+	}
+	
+	*count = argc;
+	return vector;
+}
+
 #endif /* CONSOLE_H */

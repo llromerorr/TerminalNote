@@ -13,7 +13,7 @@ typedef struct{
 }DB;
 
 DB * db_new(char * name, size_t size){
-    DB * database = malloc(sizeof(DB));
+    DB * database = (DB*) malloc(sizeof(DB));
     if((database) == NULL || (database->file = fopen(name, "wb")) == NULL)
         return NULL;
     
@@ -26,7 +26,7 @@ DB * db_new(char * name, size_t size){
 }
 
 DB * db_open(char * name){
-    DB * database = malloc(sizeof(DB));
+    DB * database = (DB*) malloc(sizeof(DB));
     FILE * file = fopen(name, "rb");
     if(file == NULL){
         return NULL;
@@ -63,7 +63,7 @@ int db_show(DB * database){
         printf("this book is empty (use '%snote%s' to add new notes).\n\n", TEXT_COLOR_FG_LMAGENTA, TEXT_DEFAULT);
         return 0;
     }
-    Note * note = malloc(sizeof(Note));
+    Note * note = (Note*) malloc(sizeof(Note));
     database->file = fopen(database->name, "rb");
     fseek(database->file, sizeof(DB), SEEK_SET);
     printf("\n%s%s%s\n", TEXT_BOLD, database->name, TEXT_DEFAULT);

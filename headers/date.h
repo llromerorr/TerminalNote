@@ -46,7 +46,7 @@ void date_show(Date * date){
 }
 
 Date * date_local(){
-	Date * date = malloc(sizeof(Date));
+	Date * date = (Date*) malloc(sizeof(Date));
 	time_t __time = time(0);
     struct tm *tlocal = localtime(&__time);
 	date->day = tlocal->tm_mday;
