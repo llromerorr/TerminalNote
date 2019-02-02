@@ -3,7 +3,6 @@
 #include "headers/database.h"
 #include "headers/app.h"
 #include "headers/terminalnote.h"
-#include "./headers/sds.h"
 
 int main(int argc, char *argv[])
 {

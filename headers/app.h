@@ -44,7 +44,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "terminalnote.h"
-#include "sds.h"
 
 void app_help()
 {
@@ -114,8 +113,8 @@ int app_note(char **args, int count)
     //creating resources
     DB *book = app_getDeafaultBook();
     Note *note = note_null();
-    sds title = sdsnew("");
-    sds info = sdsnew("");
+    char * title = "";
+    char * info = "";
 
     //Check overload Book
     if (book->count >= 999)
@@ -133,15 +132,15 @@ int app_note(char **args, int count)
             for (int j = i + 1; j < count; j++)
             {
                 if (j > i + 1)
-                    info = sdscat(info, " ");
-                info = sdscat(info, args[j]);
+                    info = console_stringCat(info, " ");
+                info = console_stringCat(info, args[j]);
             }
             break;
         }
 
         if (i > 0)
-            title = sdscat(title, " ");
-        title = sdscat(title, args[i]);
+            title = console_stringCat(title, " ");
+        title = console_stringCat(title, args[i]);
     }
 
     //add info note

@@ -127,4 +127,29 @@ char ** console_splitString(char * input, int * count)
 	return vector;
 }
 
+char * console_stringCat(char * string1, char * string2)
+{
+	int lenstr1 = (string1 == NULL) ? 0 : strlen(string1);
+	int lenstr2 = (string2 == NULL) ? 0 : strlen(string2);
+
+	//Cheking string lengths
+	if(lenstr1 + lenstr2 == 0)
+		return NULL;
+
+	char * stringTemp = (char*) malloc(sizeof(char) * (lenstr1 + lenstr2 + 1));
+	
+	//copy string1
+	for(int i = 0; i < lenstr1; i++)
+		stringTemp[i] = string1[i];
+	
+	//copy string2
+	for(int i = lenstr1; i < lenstr1 + lenstr2; i++)
+		stringTemp[i] = string2[i - lenstr1];
+
+	//append endline
+	stringTemp[lenstr1 + lenstr2] = '\0';
+
+	return stringTemp;
+}
+
 #endif /* CONSOLE_H */
