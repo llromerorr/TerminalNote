@@ -188,7 +188,83 @@ int app_show(char **args, int count)
     if(count == 0)
         db_showAll(app_getDeafaultBook());
     else
-        db_show(app_getDeafaultBook(), atoi(args[0]));
+    {
+        DB * database = NULL;
+
+        if (islower(args[0][0]) || isupper(args[0][0]))
+        {
+            database = db_open(args[0]);
+
+            if(database == NULL)
+            {
+                printf("error \"%s\" do not exist.\n\n", args[0]);
+                return -1;
+            }
+
+            else if(database->count == 0)
+            {
+                printf("this book is empty (use '%snote%s' to add new notes).\n\n",
+                        TEXT_COLOR_FG_LMAGENTA, TEXT_DEFAULT);
+                return 0;
+            }
+
+            else if (count == 1) {
+                db_showAll(database);
+                return 0;
+            }    
+
+            for(int i = 1; i < count; i++)
+            {
+                Note * note = (Note*) malloc(sizeof(Note));
+                int id = atoi(args[i]);
+
+                if(id > database->count || id < 1)
+                {
+                    printf("the note id do not exist.\n\n",
+                            TEXT_COLOR_FG_LMAGENTA, id, TEXT_DEFAULT);
+                    return 0;
+                }
+
+                database->file = fopen(database->name, "rb");
+                fseek(database->file, sizeof(DB) + (sizeof(Note) * (id - 1)), SEEK_SET);
+                fread(note, database->size, 1, database->file);
+                
+                printf("\n%s%s%s\n\n", TEXT_BOLD, console_stringToUpper(note->title), TEXT_DEFAULT);
+                printf("%s\n\n", note->info);
+                printf("Book: %s\nID:   %i\nDate: %s\nTime: %s\n\n\n", database->name, note->id, date_string(&note->date), time_toString(&note->time));
+
+                fclose(database->file);
+            }
+        }
+
+        else
+        {
+            DB * database = app_getDeafaultBook();
+
+            for(int i = 0; i < count; i++)
+            {
+                Note * note = (Note*) malloc(sizeof(Note));
+                int id = atoi(args[i]);
+
+                if(id > database->count || id < 1)
+                {
+                    printf("the note id do not exist.\n\n",
+                            TEXT_COLOR_FG_LMAGENTA, id, TEXT_DEFAULT);
+                    return 0;
+                }
+
+                database->file = fopen(database->name, "rb");
+                fseek(database->file, sizeof(DB) + (sizeof(Note) * (id - 1)), SEEK_SET);
+                fread(note, database->size, 1, database->file);
+                
+                printf("\n%s%s%s\n\n", TEXT_BOLD, console_stringToUpper(note->title), TEXT_DEFAULT);
+                printf("%s\n\n", note->info);
+                printf("Book: %s\nID:   %i\nDate: %s\nTime: %s\n\n\n", database->name, note->id, date_string(&note->date), time_toString(&note->time));
+
+                fclose(database->file);
+            }
+        }
+    }
     
 }
 

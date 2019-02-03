@@ -168,4 +168,17 @@ char * console_stringToUpper(char * input)
 	return temp;
 }
 
+int console_readInt()
+{
+	char 	input[12];
+	char*	point;
+
+	fgets(input, 12, stdin);
+	point = strchr(input, '\n');
+
+	if(point == NULL) while(getchar()!= '\n');
+	
+	return atoi(input);
+}
+
 #endif /* CONSOLE_H */
