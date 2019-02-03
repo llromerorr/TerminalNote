@@ -220,8 +220,7 @@ int app_show(char **args, int count)
 
                 if(id > database->count || id < 1)
                 {
-                    printf("the note id do not exist.\n\n",
-                            TEXT_COLOR_FG_LMAGENTA, id, TEXT_DEFAULT);
+                    printf("the note id do not exist.\n\n");
                     return 0;
                 }
 
@@ -248,8 +247,7 @@ int app_show(char **args, int count)
 
                 if(id > database->count || id < 1)
                 {
-                    printf("the note id do not exist.\n\n",
-                            TEXT_COLOR_FG_LMAGENTA, id, TEXT_DEFAULT);
+                    printf("the note id do not exist.\n\n");
                     return 0;
                 }
 
