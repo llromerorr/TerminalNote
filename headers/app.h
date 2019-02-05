@@ -266,6 +266,40 @@ int app_show(char **args, int count)
     
 }
 
+int app_remove(char **args, int count)
+{
+    DB * book = app_getDeafaultBook();
+    int * ids = (int*) malloc(sizeof(int) * count);
+
+    for(int i = 0; i < count; i++)
+        ids[i] = atoi(args[i]);
+
+    if(book == NULL)
+    {
+        printf("error \"%s\" do not exist.\n\n", book->name);
+        return -1;
+    }
+
+    else if(book->count == 0)
+    {
+        printf("this book is empty (use '%snote%s' to add new notes).\n\n",
+                TEXT_COLOR_FG_LMAGENTA, TEXT_DEFAULT);
+    }
+    
+    for(int i = 0; i < count; i++)
+    {
+        if(ids[i] > book->count || ids[i] < 1)
+            printf("the note with id '%i' do not exist.\n", ids[i]);
+        else
+            printf("[%i]|######################>| 100%\n", ids[i]);
+    }
+
+    db_remove(book, ids, count);
+    printf("\n");
+    
+    return 0;
+}
+
 int app_scanInput(char **arguments, int count)
 {
     if (strcmp(arguments[0], "note") == 0)
@@ -293,6 +327,9 @@ int app_scanInput(char **arguments, int count)
 
     else if (strcmp(arguments[0], "show") == 0)
         app_show(arguments + 1, count - 1);
+
+    else if (strcmp(arguments[0], "delete") == 0)
+        app_remove(arguments + 1, count - 1);
 
     //Temporaly fuction to test path
     // else if (strcmp(arguments[0], "path") == 0)

@@ -14,7 +14,8 @@ typedef struct{
     int     count;
 }DB;
 
-DB * db_new(char * name, size_t size){
+DB * db_new(char * name, size_t size)
+{
     DB * database = (DB*) malloc(sizeof(DB));
     if((database) == NULL || (database->file = fopen(name, "wb")) == NULL)
         return NULL;
@@ -87,6 +88,50 @@ int db_showAll(DB * database)
     
     fclose(database->file);
     printf("\n\n");
+}
+
+int db_remove(DB * database, int * ids, int idsCount)
+{
+    if(database->count == 0)
+    {
+        printf("this book is empty (use '%snote%s' to add new notes).\n\n", TEXT_COLOR_FG_LMAGENTA, TEXT_DEFAULT);
+        return 0;
+    }
+
+    //save notes in dinamic memory
+    Note * notes = (Note*) malloc(sizeof(Note) * database->count);
+    int count = database->count;
+
+    database->file = fopen(database->name, "r+b");
+    fseek(database->file, sizeof(DB), SEEK_SET);
+    
+    for(int i = 0; i < database->count; i++)
+        fread(&notes[i], database->size, 1, database->file);
+    
+    fclose(database->file);
+
+    //clear database
+    database->file = fopen(database->name, "wb");
+    database->count = 0;
+    fseek(database->file, 0, SEEK_SET);
+    fwrite(database, sizeof(DB), 1, database->file);
+    fclose(database->file);
+    
+    //write notes in file
+    for(int i = 0, newid = 1; i < count; i++)
+    {
+        if(i == *ids - 1)
+        {
+            ids++;
+            continue;
+        }
+
+        notes[i].id = newid;
+        newid++;
+        db_add(&notes[i], database);
+    }
+
+    return 0;
 }
 
 #endif //DATABASE_H
