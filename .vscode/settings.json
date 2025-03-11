@@ -22,6 +22,7 @@
         "type_traits": "cpp",
         "typeinfo": "cpp",
         "note.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "terminalnote.h": "c"
     }
 }
