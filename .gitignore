@@ -1,0 +1,15 @@
+*
+!*/
+!.gitignore
+!LICENSE
+!headers/
+!headers/date.h
+!headers/note.h
+!headers/database.h
+!headers/console.h
+!headers/textformat.h
+!headers/timenote.h
+!headers/terminalnote.h
+!headers/app.h
+!main.c
+!README.md
