@@ -90,5 +90,4 @@ exit                    # Exit the program
 [@llromerorr](https://github.com/llromerorr) from Venezuela 🇻🇪
 
 🔐 **License**:  
-MIT License - Free for use and modification 📖 TerminalNote - Gestor de Notas en Terminal  
-*Organiza tus ideas con eficiencia: Sistema de notas persistente con interfaz CLI intuitiva*
+MIT License - Free for use and modification 📖 TerminalNote - Organize notes into different categories
