@@ -89,9 +89,6 @@ exit                    # Exit the program
 🧑💻 **Lead Developer**:  
 [@llromerorr](https://github.com/llromerorr) from Venezuela 🇻🇪
 
-📥 **Download latest version**:  
-[Project Repository](https://github.com/tu_usuario/TerminalNote)
-
 🔐 **License**:  
 MIT License - Free for use and modification 📖 TerminalNote - Gestor de Notas en Terminal  
 *Organiza tus ideas con eficiencia: Sistema de notas persistente con interfaz CLI intuitiva*
