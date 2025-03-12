@@ -1,96 +1,97 @@
-# 📖 TerminalNote - Gestor de Notas en Terminal  
-*Organiza tus ideas con eficiencia: Sistema de notas persistente con interfaz CLI intuitiva*
+# 📖 TerminalNote - Terminal Note Manager  
+*Organize your ideas efficiently: Persistent note system with intuitive CLI interface*
 
-![Demo de la Aplicación](https://raw.githubusercontent.com/llromerorr/TerminalNote/refs/heads/master/resource/preview.gif)
+![Application Demo](https://raw.githubusercontent.com/llromerorr/TerminalNote/refs/heads/master/resource/preview.gif)
 
-## 🚀 Características Principales
-- **Sistema de libros**: Organiza notas en diferentes categorías
-- **Persistencia de datos**: Almacenamiento en archivos binarios
-- **Interfaz colorida**: Soporte para formato de texto y colores ANSI
-- **Multiplataforma**: Compatible con Windows y Linux
-- **Comandos intuitivos**: Sintaxis estilo UNIX con autodocumentación
-- **Gestión avanzada**:
-  - Búsqueda y eliminación de notas
-  - Estadísticas de uso
-  - Sistema de advertencias para libros llenos
+## 🚀 Main Features
+- **Book system**: Organize notes into different categories
+- **Data persistence**: Storage in binary files
+- **Colorful interface**: Support for text formatting and ANSI colors
+- **Cross-platform**: Compatible with Windows and Linux
+- **Intuitive commands**: UNIX-style syntax with self-documentation
+- **Advanced management**:
+  - Search and delete notes
+  - Usage statistics
+  - Warning system for full books
 
-## 🧩 Estructura del Proyecto
+## 🧩 Project Structure
 ```
 src/
 ├── headers/
-│   ├── app.h          // Lógica principal de la aplicación
-│   ├── note.h         // Estructura y manipulación de notas
-│   ├── database.h     // Sistema de almacenamiento persistente
-│   ├── console.h      // Utilidades de interfaz de usuario
-│   ├── date.h        // Manejo de fechas y tiempos
-│   ├── terminalnote.h // Punto de integración de componentes
-│   └── textformat.h  // Códigos ANSI para formato de texto
-├── main.c             // Punto de entrada principal
-└── (Sistema de build)
+│   ├── app.h          // Main application logic
+│   ├── note.h         // Note structure and manipulation
+│   ├── database.h     // Persistent storage system
+│   ├── console.h      // User interface utilities
+│   ├── date.h         // Date and time handling
+│   ├── terminalnote.h // Component integration point
+│   └── textformat.h   // ANSI codes for text formatting
+├── main.c             // Main entry point
+└── (Build system)
 ```
 
-## 🛠️ Tecnologías Clave
-- **Lenguaje**: C11 (Compatibilidad completa con estándares)
-- **Bibliotecas**:
-  - Standard I/O (gestión de archivos)
-  - Time.h (manejo de fechas/horas)
-  - String.h (manipulación de cadenas)
-- **Paradigmas**:
-  - Programación modular
-  - Gestión manual de memoria
-  - Interfaz conversacional (REPL)
-- **Persistencia**:
-  - Archivos binarios estructurados
-  - Sistema de libros con metadata
-  - Recuperación de datos ante fallos
+## 🛠️ Key Technologies
+- **Language**: C11 (Full standard compatibility)
+- **Libraries**:
+  - Standard I/O (file management)
+  - Time.h (date/time handling)
+  - String.h (string manipulation)
+- **Paradigms**:
+  - Modular programming
+  - Manual memory management
+  - Conversational interface (REPL)
+- **Persistence**:
+  - Structured binary files
+  - Book system with metadata
+  - Data recovery in case of failures
 
-## 🔧 Compilación y Ejecución
-1. **Requisitos**:
-   - Compilador C (GCC o Clang)
-   - Sistema Linux/Windows (soporte nativo)
+## 🔧 Compilation and Execution
+1. **Requirements**:
+   - C Compiler (GCC or Clang)
+   - Linux/Windows system (native support)
 
-2. **Compilar proyecto**:
+2. **Compile project**:
 ```bash
 gcc main.c -o tnote -Wall -Wextra -pedantic
 ```
 
-3. **Ejecutar**:
+3. **Run**:
 ```bash
 ./tnote
 ```
 
-## 🎮 Comandos Disponibles
+## 🎮 Available Commands
 ```bash
-# Operaciones básicas
-note "Título : Contenido"  # Crear nueva nota
-show [id|book]             # Mostrar notas
-delete <id>                # Eliminar nota
+# Basic operations
+note "Title : Content"  # Create new note
+show [id|book]          # Show notes
+delete <id>             # Delete note
 
-# Gestión de libros
-new <nombre_libro>         # Crear nuevo libro
-open <libro>               # Cambiar libro activo
-destroy                    # Eliminar libro actual
+# Book management
+new <book_name>         # Create new book
+open <book>             # Change active book
+destroy                 # Delete current book
 
-# Utilidades
-clear                      # Limpiar pantalla
-help                       # Mostrar ayuda
-exit                       # Salir del programa
+# Utilities
+clear                   # Clear screen
+help                    # Show help
+exit                    # Exit the program
 ```
 
-## 📌 Roadmap de Mejoras
-- [ ] Sistema de búsqueda full-text
-- [ ] Exportación a formato Markdown/PDF
-- [ ] Soporte para etiquetas/categorías
-- [ ] Modo portable (configuración en USB)
-- [ ] Integración con editores externos
+## 📌 Improvement Roadmap
+- [ ] Full-text search system
+- [ ] Export to Markdown/PDF format
+- [ ] Support for tags/categories
+- [ ] Portable mode (USB configuration)
+- [ ] Integration with external editors
 
 ---
 
-🧑💻 **Desarrollador Principal**:  
-[@llromerorr](https://github.com/llromerorr) desde Venezuela 🇻🇪
+🧑💻 **Lead Developer**:  
+[@llromerorr](https://github.com/llromerorr) from Venezuela 🇻🇪
 
-📥 **Descarga última versión**:  
-[Repositorio del Proyecto](https://github.com/tu_usuario/TerminalNote)
+📥 **Download latest version**:  
+[Project Repository](https://github.com/tu_usuario/TerminalNote)
 
-🔐 **Licencia**:  
-MIT License - Libre para uso y modificación
+🔐 **License**:  
+MIT License - Free for use and modification 📖 TerminalNote - Gestor de Notas en Terminal  
+*Organiza tus ideas con eficiencia: Sistema de notas persistente con interfaz CLI intuitiva*
