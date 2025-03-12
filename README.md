@@ -1,84 +1,96 @@
-# TerminalNote
+# 📖 TerminalNote - Gestor de Notas en Terminal  
+*Organiza tus ideas con eficiencia: Sistema de notas persistente con interfaz CLI intuitiva*
 
-TerminalNote is a powerful note-taking application designed for the terminal. This application allows users to create, manage, and organize their notes efficiently using a command-line interface.
+![Demo de la Aplicación]()
 
-## Features
+## 🚀 Características Principales
+- **Sistema de libros**: Organiza notas en diferentes categorías
+- **Persistencia de datos**: Almacenamiento en archivos binarios
+- **Interfaz colorida**: Soporte para formato de texto y colores ANSI
+- **Multiplataforma**: Compatible con Windows y Linux
+- **Comandos intuitivos**: Sintaxis estilo UNIX con autodocumentación
+- **Gestión avanzada**:
+  - Búsqueda y eliminación de notas
+  - Estadísticas de uso
+  - Sistema de advertencias para libros llenos
 
-- Create new notes with titles and detailed information.
-- Organize notes into different books.
-- View all notes or specific notes by ID.
-- Delete notes or entire books.
-- Handle large volumes of notes with ease.
+## 🧩 Estructura del Proyecto
+```
+src/
+├── headers/
+│   ├── app.h          // Lógica principal de la aplicación
+│   ├── note.h         // Estructura y manipulación de notas
+│   ├── database.h     // Sistema de almacenamiento persistente
+│   ├── console.h      // Utilidades de interfaz de usuario
+│   ├── date.h        // Manejo de fechas y tiempos
+│   ├── terminalnote.h // Punto de integración de componentes
+│   └── textformat.h  // Códigos ANSI para formato de texto
+├── main.c             // Punto de entrada principal
+└── (Sistema de build)
+```
 
-## How It Was Made
+## 🛠️ Tecnologías Clave
+- **Lenguaje**: C11 (Compatibilidad completa con estándares)
+- **Bibliotecas**:
+  - Standard I/O (gestión de archivos)
+  - Time.h (manejo de fechas/horas)
+  - String.h (manipulación de cadenas)
+- **Paradigmas**:
+  - Programación modular
+  - Gestión manual de memoria
+  - Interfaz conversacional (REPL)
+- **Persistencia**:
+  - Archivos binarios estructurados
+  - Sistema de libros con metadata
+  - Recuperación de datos ante fallos
 
-TerminalNote was developed using the C programming language, leveraging various libraries and techniques to ensure robust functionality and performance. The application was built with a focus on efficiency, user experience, and scalability.
+## 🔧 Compilación y Ejecución
+1. **Requisitos**:
+   - Compilador C (GCC o Clang)
+   - Sistema Linux/Windows (soporte nativo)
 
-### Methods Used
+2. **Compilar proyecto**:
+```bash
+gcc main.c -o tnote -Wall -Wextra -pedantic
+```
 
-- **File I/O**: Utilized `fopen`, `fclose`, `fread`, `fwrite`, and `remove` for file operations.
-- **Dynamic Memory Allocation**: Used `malloc` and `free` for managing dynamic memory.
-- **String Manipulation**: Employed various string functions such as `strcpy`, `strcmp`, and custom string concatenation functions.
-- **Time and Date Handling**: Implemented functions to capture and display the current time and date for each note.
-- **Custom Data Structures**: Designed structures for notes (`Note`) and books (`DB`) to organize and manage data efficiently.
-- **Error Checking**: Included checks for file existence, memory allocation success, and other potential errors.
+3. **Ejecutar**:
+```bash
+./tnote
+```
 
-## Getting Started
+## 🎮 Comandos Disponibles
+```bash
+# Operaciones básicas
+note "Título : Contenido"  # Crear nueva nota
+show [id|book]             # Mostrar notas
+delete <id>                # Eliminar nota
 
-To get started with TerminalNote, follow these steps:
+# Gestión de libros
+new <nombre_libro>         # Crear nuevo libro
+open <libro>               # Cambiar libro activo
+destroy                    # Eliminar libro actual
 
-1. **Clone the Repository**:
-    ```sh
-    git clone https://github.com/yourusername/TerminalNote.git
-    cd TerminalNote
-    ```
+# Utilidades
+clear                      # Limpiar pantalla
+help                       # Mostrar ayuda
+exit                       # Salir del programa
+```
 
-2. **Compile the Application**:
-    ```sh
-    gcc -o tnote main.c -Iheaders
-    ```
+## 📌 Roadmap de Mejoras
+- [ ] Sistema de búsqueda full-text
+- [ ] Exportación a formato Markdown/PDF
+- [ ] Soporte para etiquetas/categorías
+- [ ] Modo portable (configuración en USB)
+- [ ] Integración con editores externos
 
-3. **Run the Application**:
-    ```sh
-    ./tnote
-    ```
+---
 
-## Usage
+🧑💻 **Desarrollador Principal**:  
+[@llromerorr](https://github.com/llromerorr) desde Venezuela 🇻🇪
 
-Here are some basic commands to use TerminalNote:
+📥 **Descarga última versión**:  
+[Repositorio del Proyecto](https://github.com/tu_usuario/TerminalNote)
 
-- **Create a New Note**:
-    ```sh
-    ./terminalnote note "Title" : "Detailed information about the note"
-    ```
-
-- **View All Notes**:
-    ```sh
-    ./terminalnote show
-    ```
-
-- **Delete a Note by ID**:
-    ```sh
-    ./terminalnote remove 1
-    ```
-
-- **Create a New Book**:
-    ```sh
-    ./terminalnote newbook "BookName"
-    ```
-
-- **Open a Book**:
-    ```sh
-    ./terminalnote openbook "BookName"
-    ```
-
-- **Delete a Book**:
-    ```sh
-    ./terminalnote destroybook "BookName"
-    ```
-
-## Conclusion
-
-TerminalNote is a testament to the power and flexibility of C programming, showcasing efficient file handling, robust data structures, and a user-friendly command-line interface. This project highlights the ability to create efficient and user-friendly software solutions for the terminal.
-
-Feel free to explore the code and contribute to the project!
+🔐 **Licencia**:  
+MIT License - Libre para uso y modificación

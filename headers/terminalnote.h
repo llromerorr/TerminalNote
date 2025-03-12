@@ -5,7 +5,7 @@
 // Created in January 2018
 
 /*----------------DEFINITIONS----------------*/
-#define _APPLICATION_VERSION_ "v0.0.2 beta"
+#define _APPLICATION_VERSION_ "v1.0.1"
 
 /*-----------------INCLUDES------------------*/
 #include "app.h"
