@@ -63,7 +63,7 @@ gcc main.c -o tnote -Wall -Wextra -pedantic
 ```bash
 # Basic operations
 note "Title : Content"  # Create new note
-show [id|book]          # Show notes
+show                    # Show notes
 delete <id>             # Delete note
 
 # Book management

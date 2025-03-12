@@ -49,7 +49,7 @@ void app_help()
 {
     printf("\n%s%-10s %-19s %-20s%s\n", TEXT_BOLD, "COMMAND", "ARGUMNETS", "DESCRIPTION", TEXT_DEFAULT);
     printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LCYAN, "note", TEXT_COLOR_FG_DEFAULT, "{title} : {info}", "create new note in current book");
-    // printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LWHITE, "show", TEXT_COLOR_FG_DEFAULT, "{book | note id}", "show all or specific note by id (default is all)");
+    printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LWHITE, "show", TEXT_COLOR_FG_DEFAULT, "", "show all notes in the current book");
     // printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LWHITE, "find", TEXT_COLOR_FG_DEFAULT, "{text}", "search for text in the content of any note");
     printf("%s%-10s%s %-19s %-20s\n", TEXT_COLOR_FG_LRED, "delete", TEXT_COLOR_FG_DEFAULT, "{note id}", "delete note by id code");
 
