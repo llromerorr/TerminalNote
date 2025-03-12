@@ -1,7 +1,7 @@
 # 📖 TerminalNote - Gestor de Notas en Terminal  
 *Organiza tus ideas con eficiencia: Sistema de notas persistente con interfaz CLI intuitiva*
 
-![Demo de la Aplicación]()
+![Demo de la Aplicación](https://raw.githubusercontent.com/llromerorr/TerminalNote/refs/heads/master/resource/preview.gif)
 
 ## 🚀 Características Principales
 - **Sistema de libros**: Organiza notas en diferentes categorías
